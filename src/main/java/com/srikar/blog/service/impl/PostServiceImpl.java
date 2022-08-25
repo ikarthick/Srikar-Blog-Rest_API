@@ -2,6 +2,7 @@ package com.srikar.blog.service.impl;
 
 import com.srikar.blog.dto.PostDTO;
 import com.srikar.blog.entity.Post;
+import com.srikar.blog.exception.ResourceNotFoundException;
 import com.srikar.blog.repository.PostRepository;
 import com.srikar.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,12 @@ public class PostServiceImpl implements PostService {
     public List<PostDTO> getAllPosts() {
         List<Post> posts = postRepository.findAll();
         return posts.stream().map(post -> mapToDto(post)).collect(Collectors.toList());
+    }
+
+    @Override
+    public PostDTO getPostById(long id) {
+         Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+         return mapToDto(post);
     }
 
 
