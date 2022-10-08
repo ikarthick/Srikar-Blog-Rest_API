@@ -18,7 +18,7 @@ import java.util.List;
 public class PostController {
 
     @Autowired
-    private PostService postService;
+    private final PostService postService;
 
     public PostController(PostService postService) {
         this.postService = postService;

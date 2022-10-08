@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
 public class PostServiceImpl implements PostService {
 
     @Autowired
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
 
-    private ModelMapper mapper;
+    private final ModelMapper mapper;
 
     public PostServiceImpl(PostRepository postRepository, ModelMapper mapper) {
 
