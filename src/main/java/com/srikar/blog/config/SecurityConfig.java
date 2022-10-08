@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+    @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
@@ -42,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+                .antMatchers("api/auth/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -53,7 +55,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
-//        @Override
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    //        @Override
 //    @Bean
 //    protected UserDetailsService userDetailsService() {
 //        User.UserBuilder users = User.withDefaultPasswordEncoder();
